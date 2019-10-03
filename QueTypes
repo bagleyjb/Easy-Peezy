@@ -1,0 +1,116 @@
+#include <iostream>
+using namespace std;
+
+class QueType
+{
+public:
+    QueType();
+    void MakeEmpty();
+    bool IsEmpty() const;
+    bool IsFull() const;
+    void Enqueue(int a);
+    void Dequeue(int& b);
+    int GetLength()const;
+    
+private:
+    int front, rear, length;
+    int max;
+    int items[];
+};
+
+int main()
+{
+    
+    int size,s;
+    
+    
+    cout<<"Enter a number and press enter to start test 1-empty, 2 - full, 3-queue, 4 - dequeue, 5 - length: "<<endl;
+    QueType q;
+    
+    while(size!=6){
+        cin>>size;
+        if(size ==1)
+        {q.IsEmpty();
+            cout<<"Test 1: Empty\n";}
+        else if(size==2)
+        { q.IsFull();
+            cout<<"Test 2: Full\n";}
+        else if(size==3)
+        {q.Enqueue(1);
+            q.Enqueue(3);
+            q.Enqueue(5);
+            q.Enqueue(9);
+            q.Enqueue(2);
+            q.Enqueue(8);
+            cout<<"Test 3 Queue.\n";
+        }
+        
+        else if(size==4)
+        {q.Dequeue(s);
+            cout<<"Test 4: Dequeue\n";}
+        else if(size==5)
+        {cout<<"The length is "<<q.GetLength()<<endl;
+            cout<<"Test 5: Length\n";}
+        cout<<"What is your next selection 1-5: ";
+    }
+    
+    
+    return 0;
+}
+
+QueType::QueType()
+{
+    max = 7;
+}
+
+void QueType:: MakeEmpty()                      //Make queue empty
+{
+    front = rear = -1;                          //-1 ensures no items
+    length = 0;                                 //there is no count of items
+}
+
+bool QueType::IsEmpty()const                    //checks to see if queue is empty
+{
+    if(rear == front && length ==0)             //No items in and no count
+        return true;
+    else
+        return false;
+}
+
+bool QueType:: IsFull()const                    //Checks to see if queue is full
+{
+    if((rear+1)%max == front)
+        return true;
+    else
+        return false;
+}
+
+void QueType::Enqueue(int g)                   //Adds an item to queue
+{
+    if(IsFull())                                //If full, there is no queue action
+        cout<<"Queue is full! "<<endl;
+    else
+    {
+        rear = (rear +1)%max;                   //Adds an extra space
+        items[rear] = g;                        //Adds the item to the rear
+        length++;                               //Increment the length count for the item
+    }
+}
+
+void QueType::Dequeue(int& h)                  //Subtracts an item from queue
+{
+    if(IsEmpty())                               //Test queuw for empty
+        cout<<"Queue is empty! "<<endl;
+    else
+    {
+        front = (front+1)%max;                  //Moves front up
+        h = items[front];                       //Copy returned in h
+        length--;                               //Subtract count
+    }
+}
+
+int QueType::GetLength()const                   //Return length
+{return length;}
+
+
+
